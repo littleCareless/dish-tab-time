@@ -3,8 +3,8 @@ import { defineConfig } from 'wxt'
 // See https://wxt.dev/api/config.html
 export default defineConfig({
   manifest: {
-    name: '浏览时间统计',
-    description: '记录并统计浏览器标签页的使用时间，类似于iOS的屏幕使用时间',
+    name: 'TabTime: Tab Usage Analytics',
+    description: 'Track and analyze your browser tab usage time, just like iOS Screen Time.',
     version: '1.0.0',
     permissions: [
       'tabs',
@@ -22,7 +22,7 @@ export default defineConfig({
         "96": "icon/96.png",
         "128": "icon/128.png"
       },
-      "default_title": "浏览时间统计"
+      "default_title": "TabTime"
     },
   },
   modules: ['@wxt-dev/module-react'],

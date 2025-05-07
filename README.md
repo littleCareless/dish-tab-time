@@ -1,3 +1,3 @@
-# WXT + React
+# TabTime: Tab Usage Analytics
 
-This template should help get you started developing with React in WXT.
+TabTime is a browser extension that tracks and analyzes your tab usage time, helping you understand and manage your browsing habits.

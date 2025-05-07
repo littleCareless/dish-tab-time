@@ -1,6 +1,6 @@
 {
-  "name": "wxt-react-starter",
-  "description": "manifest.json description",
+  "name": "tabtime",
+  "description": "Track and analyze your browser tab usage time, just like iOS Screen Time.",
   "private": true,
   "version": "0.0.0",
   "type": "module",
