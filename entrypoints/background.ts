@@ -56,11 +56,16 @@ export default defineBackground(() => {
 
     const date = getCurrentDateString()
     const domain = extractDomain(activeTabInfo.url)
+    const currentHour = new Date().getHours()
 
     // 从存储中获取当前日期的记录
     const storageKey = `tab_time_${date}`
-    const result = await browser.storage.local.get(storageKey)
+    const hourlyStatsKey = `hourly_stats_${date}`
+    const result = await browser.storage.local.get([storageKey, hourlyStatsKey])
     let dailyRecords: TabTimeRecord[] = result[storageKey] || []
+
+    // 获取小时统计数据
+    let hourlyStats: { hour: number, timeSpent: number }[] = result[hourlyStatsKey] || []
 
     // 查找是否已有该URL的记录
     const existingRecordIndex = dailyRecords.findIndex(record => record.url === activeTabInfo.url)
@@ -84,8 +89,22 @@ export default defineBackground(() => {
       })
     }
 
+    // 更新小时统计数据
+    const hourIndex = hourlyStats.findIndex(stat => stat.hour === currentHour)
+    if (hourIndex >= 0) {
+      hourlyStats[hourIndex].timeSpent += timeSpent
+    } else {
+      hourlyStats.push({
+        hour: currentHour,
+        timeSpent: timeSpent
+      })
+    }
+
     // 保存更新后的记录
-    await browser.storage.local.set({ [storageKey]: dailyRecords })
+    await browser.storage.local.set({
+      [storageKey]: dailyRecords,
+      [hourlyStatsKey]: hourlyStats
+    })
 
     // 更新最后活跃时间
     activeTabInfo.lastActiveTime = currentTime
@@ -116,7 +135,7 @@ export default defineBackground(() => {
   /**
    * 处理标签页更新事件
    */
-  async function handleTabUpdated(tabId: number, changeInfo: { url?: string, title?: string }, tab: browser.tabs.Tab) {
+  async function handleTabUpdated(tabId: number, changeInfo: { url?: string, title?: string }, tab: Browser.tabs.Tab) {
     // 如果当前活跃标签就是被更新的标签
     if (activeTabInfo.id === tabId) {
       // 如果URL发生变化，先保存之前URL的使用时间
@@ -163,5 +182,14 @@ export default defineBackground(() => {
         console.error('获取当前标签页信息失败:', error)
       }
     }
+  })
+
+  // 监听扩展图标点击事件
+  browser.action.onClicked.addListener((tab) => {
+    // 打开侧边栏
+    browser.sidePanel.open({
+      tabId: tab.id!,
+      // path: 'src/sidebar/index.html'
+    })
   })
 })

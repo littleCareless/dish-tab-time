@@ -3,7 +3,7 @@
  * 提供处理和分析标签页使用时间数据的功能
  */
 
-import { TabTimeRecord, DomainTimeStats, DailyTimeStats } from '../types'
+import { TabTimeRecord, DomainTimeStats, DailyTimeStats, type HourlyTimeStats } from '../types'
 
 /**
  * 将毫秒转换为可读的时间格式
@@ -72,6 +72,30 @@ export async function getDomainTimeStats(date: string): Promise<DomainTimeStats[
 }
 
 /**
+ * 获取指定日期的小时使用时间统计
+ * @param date 日期字符串 (YYYY-MM-DD格式)
+ * @returns 小时使用时间统计数组
+ */
+export async function getHourlyTimeStats(date: string): Promise<HourlyTimeStats[]> {
+  const hourlyStatsKey = `hourly_stats_${date}`
+  const result = await browser.storage.local.get(hourlyStatsKey)
+  const hourlyStats = result[hourlyStatsKey] || []
+
+  // 确保24小时都有数据，没有数据的小时设为0
+  const completeHourlyStats: HourlyTimeStats[] = []
+  for (let hour = 0; hour < 24; hour++) {
+    const existingStat = hourlyStats.find((stat: any) => stat.hour === hour)
+    if (existingStat) {
+      completeHourlyStats.push(existingStat)
+    } else {
+      completeHourlyStats.push({ hour, timeSpent: 0 })
+    }
+  }
+
+  return completeHourlyStats
+}
+
+/**
  * 获取指定日期的每日使用时间统计
  * @param date 日期字符串 (YYYY-MM-DD格式)
  * @returns 每日使用时间统计对象
@@ -79,6 +103,7 @@ export async function getDomainTimeStats(date: string): Promise<DomainTimeStats[
 export async function getDailyTimeStats(date: string): Promise<DailyTimeStats> {
   const records = await getTabTimeRecords(date)
   const domainStats = await getDomainTimeStats(date)
+  const hourlyStats = await getHourlyTimeStats(date)
 
   // 计算总使用时间
   const totalTimeSpent = records.reduce((total, record) => total + record.timeSpent, 0)
@@ -86,7 +111,8 @@ export async function getDailyTimeStats(date: string): Promise<DailyTimeStats> {
   return {
     date,
     totalTimeSpent,
-    domainStats
+    domainStats,
+    hourlyStats
   }
 }
 

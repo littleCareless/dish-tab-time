@@ -3,17 +3,17 @@
  */
 export interface TabTimeRecord {
   /** 标签页的URL */
-  url: string;
+  url: string
   /** 标签页的标题 */
-  title: string;
+  title: string
   /** 域名 */
-  domain: string;
+  domain: string
   /** 使用时间（毫秒） */
-  timeSpent: number;
+  timeSpent: number
   /** 访问日期（YYYY-MM-DD格式） */
-  date: string;
+  date: string
   /** 最后活跃时间戳 */
-  lastActiveTimestamp: number;
+  lastActiveTimestamp: number
 }
 
 /**
@@ -21,11 +21,21 @@ export interface TabTimeRecord {
  */
 export interface DomainTimeStats {
   /** 域名 */
-  domain: string;
+  domain: string
   /** 总使用时间（毫秒） */
-  totalTimeSpent: number;
+  totalTimeSpent: number
   /** 访问次数 */
-  visitCount: number;
+  visitCount: number
+}
+
+/**
+ * 小时使用时间统计
+ */
+export interface HourlyTimeStats {
+  /** 小时（0-23） */
+  hour: number
+  /** 该小时的使用时间（毫秒） */
+  timeSpent: number
 }
 
 /**
@@ -33,9 +43,11 @@ export interface DomainTimeStats {
  */
 export interface DailyTimeStats {
   /** 日期（YYYY-MM-DD格式） */
-  date: string;
+  date: string
   /** 总使用时间（毫秒） */
-  totalTimeSpent: number;
+  totalTimeSpent: number
   /** 按域名分组的统计 */
-  domainStats: DomainTimeStats[];
+  domainStats: DomainTimeStats[]
+  /** 按小时分组的统计 */
+  hourlyStats?: HourlyTimeStats[]
 }
