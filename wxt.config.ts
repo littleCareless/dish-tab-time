@@ -9,7 +9,9 @@ export default defineConfig({
     permissions: [
       'tabs',
       'storage',
-      'activeTab'
+      'activeTab',
+      'declarativeNetRequest',
+      'notifications'
     ],
     host_permissions: [
       '<all_urls>'

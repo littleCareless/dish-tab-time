@@ -51,3 +51,37 @@ export interface DailyTimeStats {
   /** 按小时分组的统计 */
   hourlyStats?: HourlyTimeStats[]
 }
+
+/**
+ * 网站使用限制配置
+ */
+export interface WebsiteLimitConfig {
+  /** 域名 */
+  domain: string
+  /** 每日使用时间限制（毫秒） */
+  dailyLimit: number
+  /** 工作日限制（周一至周五）*/
+  workdayLimit?: number
+  /** 周末限制（周六和周日）*/
+  weekendLimit?: number
+  /** 是否启用限制 */
+  enabled: boolean
+  /** 最后一次提醒时间戳 */
+  lastNotificationTime?: number
+  /** 临时解除限制的结束时间戳 */
+  temporaryUnlockUntil?: number
+  /** 是否 */
+  matchPattern?: string
+}
+
+/**
+ * 限制状态类型
+ */
+export enum LimitStatus {
+  /** 正常使用 */
+  NORMAL = 'normal',
+  /** 接近限制 */
+  WARNING = 'warning',
+  /** 已达到限制 */
+  BLOCKED = 'blocked'
+}
