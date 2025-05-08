@@ -1,0 +1,41 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Project Structure
+
+TabTime is organized into the following directory structure:
+
+## Key Directories
+
+- **entrypoints/** - Contains browser extension entry points
+  - **background.ts** - Background script
+  - **content.ts** - Content script
+  - **options/** - Options page
+  - **sidepanel/** - Sidepanel UI
+
+- **src/** - Core source code
+  - **types/** - TypeScript type definitions
+  - **services/** - Business logic services
+  - **settings/** - Settings management
+  - **block/** - Website blocking page
+
+- **public/** - Static assets
+  - **icon/** - Extension icons
+
+## Configuration Files
+
+- [wxt.config.ts](mdc:wxt.config.ts) - WXT (Web Extension Toolkit) configuration
+- [package.json](mdc:package.json) - Project dependencies and scripts
+- [tsconfig.json](mdc:tsconfig.json) - TypeScript configuration
+
+## Build Scripts
+The project uses [WXT](mdc:https:/wxt.dev) (Web Extension Toolkit) for development and building. Key npm scripts:
+
+- `npm run dev` - Development mode for Chrome
+- `npm run dev:firefox` - Development mode for Firefox
+- `npm run build` - Build for Chrome
+- `npm run build:firefox` - Build for Firefox
+- `npm run zip` - Package the extension for Chrome
+- `npm run zip:firefox` - Package the extension for Firefox

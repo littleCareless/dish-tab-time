@@ -1,0 +1,29 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# TabTime Browser Extension: Project Overview
+
+TabTime is a browser extension that tracks and analyzes your browser tab usage time, similar to iOS Screen Time. It helps users monitor their web browsing habits and set usage limits for specific websites.
+
+## Main Components
+
+- **Background Script**: [background.ts](mdc:entrypoints/background.ts) - Runs in the background to track tab activity and time spent
+- **Sidepanel UI**: [sidepanel/App.tsx](mdc:entrypoints/sidepanel/App.tsx) - Provides quick access to usage statistics
+- **Options Page**: [options/App.tsx](mdc:entrypoints/options/App.tsx) - Full dashboard for viewing detailed statistics and configuring website limits
+- **Block Page**: [block/index.html](mdc:src/block/index.html) - Shown when a user reaches their time limit for a website
+
+## Core Features
+
+1. **Tab Time Tracking**: Records time spent on each website
+2. **Usage Analytics**: Visualizes browsing habits with charts and statistics
+3. **Website Limits**: Allows setting daily time limits for specific websites
+4. **Block Functionality**: Restricts access to websites once limits are reached
+
+## Technology Stack
+
+- Built with [WXT](https://wxt.dev/) - Web Extension Toolkit
+- React for UI components
+- TypeScript for type safety
+- ECharts for data visualization

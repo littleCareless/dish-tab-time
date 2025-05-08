@@ -1,0 +1,62 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Services
+
+TabTime uses service modules to encapsulate business logic and data manipulation functionality.
+
+## Time Statistics Service
+
+[src/services/timeStats.ts](mdc:src/services/timeStats.ts) - Provides functions for:
+
+- Retrieving and processing tab usage data
+- Formatting time values for display
+- Aggregating statistics by domain and time period
+
+Key functions:
+
+```typescript
+// Formats milliseconds into human-readable strings (e.g., "2 hours 30 minutes")
+formatTimeSpent(ms: number): string
+
+// Gets raw tab time records for a specific date
+getTabTimeRecords(date: string): Promise<TabTimeRecord[]>
+
+// Gets domain-specific statistics for a date
+getDomainTimeStats(date: string): Promise<DomainTimeStats[]>
+
+// Gets hourly usage breakdown for a date
+getHourlyTimeStats(date: string): Promise<HourlyTimeStats[]>
+
+// Gets complete statistics for a single day
+getDailyTimeStats(date: string): Promise<DailyTimeStats>
+
+// Gets statistics for the most recent days
+getRecentDaysStats(days: number): Promise<DailyTimeStats[]>
+```
+
+## Website Limits Service
+
+[src/settings/website-limits.ts](mdc:src/settings/website-limits.ts) - Manages website usage limits:
+
+- Retrieving and storing limit configurations
+- Adding, updating, and removing limits
+- Checking if a domain has reached its limit
+
+Key functions:
+
+```typescript
+// Gets all website limit configurations
+getWebsiteLimits(): Promise<WebsiteLimitConfig[]>
+
+// Saves website limit configurations
+saveWebsiteLimits(limits: WebsiteLimitConfig[]): Promise<void>
+
+// Adds or updates a specific website limit
+addOrUpdateWebsiteLimit(limit: WebsiteLimitConfig): Promise<void>
+
+// Removes a website limit
+removeWebsiteLimit(domain: string): Promise<void>
+```

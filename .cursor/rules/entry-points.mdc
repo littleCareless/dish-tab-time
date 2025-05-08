@@ -1,0 +1,40 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Browser Extension Entry Points
+
+Browser extensions have multiple entry points for different contexts. Here's how TabTime is structured:
+
+## Background Script
+
+[background.ts](mdc:entrypoints/background.ts) - The main background script that:
+- Tracks active tab time
+- Records usage statistics
+- Manages website time limits
+- Handles blocking when limits are reached
+
+This script runs continuously in the background while the browser is open, even when the extension UI is not visible.
+
+## Options Page
+
+The options page provides a full dashboard experience:
+- [options/index.html](mdc:entrypoints/options/index.html) - HTML entry point
+- [options/main.tsx](mdc:entrypoints/options/main.tsx) - React bootstrapping
+- [options/App.tsx](mdc:entrypoints/options/App.tsx) - Main component with dashboard UI
+
+The options page is accessed by right-clicking the extension icon and selecting "Options" or through the browser's extension management page.
+
+## Sidepanel
+
+The sidepanel provides quick access to stats without leaving the current page:
+- [sidepanel/index.html](mdc:entrypoints/sidepanel/index.html) - HTML entry point
+- [sidepanel/main.tsx](mdc:entrypoints/sidepanel/main.tsx) - React bootstrapping
+- [sidepanel/App.tsx](mdc:entrypoints/sidepanel/App.tsx) - Main component with simplified UI
+
+The sidepanel is accessed by clicking the extension icon in the browser toolbar.
+
+## Content Script
+
+[content.ts](mdc:entrypoints/content.ts) - A minimal content script that runs in the context of web pages to provide additional functionality if needed.
